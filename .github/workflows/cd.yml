@@ -22,15 +22,14 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Setup gcloud auth
-        uses: google-github-actions/auth@v2'
+      - id: auth
+        name: Authenticate with Google
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: "{{ secrets.GCP_CREDENTIALS }}"
+          
       - name: Set up Cloud SDK
-        uses: "google-github-actions/setup-gcloud@v3"
-
-      - name: Use gcloud CLI
-        run: "gcloud info"
+        uses: google-github-actions/setup-gcloud@v3
 
       - name: Build docker and push to gcloud
         run: gcloud builds submit --tag europe-west8-docker.pkg.dev/notely-492017/notely-ar-repo/dannmark/notely .
